@@ -10,6 +10,13 @@
 class Heap {
 private:
     vector<Item> heap;
+    string toLower(const string& word) {
+        string result;
+        for (char c : word) {
+            result += tolower(c);
+        }
+        return result;
+    }
 
     void maxHeapifyprice(int n, int i) {
         int largest = i;
@@ -42,6 +49,40 @@ private:
             minHeapifyprice(n, smallest);
         }
     }
+
+    //Max heapify function
+    void maxHeapifyName(vector<Item>& items, int n, int i) {
+        int largest = i;
+        int left = 2 * i + 1;
+        int right = 2 * i + 2;
+
+        if (left < n && toLower(items[left].itemName) >toLower(items[largest].itemName))
+            largest = left;
+        if (right < n &&toLower(items[right].itemName) > toLower(items[largest].itemName))
+            largest = right;
+
+        if (largest != i) {
+            swap(items[i], items[largest]);
+            maxHeapifyName(items, n, largest);
+        }
+    }
+
+// min heapify function
+    void minHeapifyName(vector<Item>& items, int n, int i) {
+        int smallest = i;
+        int left = 2 * i + 1;
+        int right = 2 * i + 2;
+        if (left < n && toLower(items[left].itemName) < toLower(items[smallest].itemName))
+            smallest = left;
+        if (right < n && toLower(items[right].itemName)<toLower(items[smallest].itemName))
+            smallest = right;
+
+        if (smallest != i) {
+            swap(items[i], items[smallest]);
+            minHeapifyName(items, n, smallest);
+        }
+    }
+
 
 public:
     Heap() {}
@@ -76,6 +117,38 @@ public:
             minHeapifyprice(i, 0);
         }
         displayItems();
+    }
+
+// Heap sort function
+    void heapSortbyNameasc() {
+        int n = heap.size();
+
+        // Build max heap
+        for (int i = n / 2 - 1; i >= 0; --i)
+            maxHeapifyName(heap, n, i);
+        // Extract items one by one
+        for (int i = n - 1; i > 0; --i) {
+            swap(heap[0], heap[i]);
+            maxHeapifyName(heap, i, 0);
+        }
+        displayItems();
+
+    }
+// Heap sort function (ascending order)
+    void heapSortbyNamedec() {
+        int n = heap.size();
+
+        // Build min heap (rearrange array)
+        for (int i = n / 2 - 1; i >= 0; --i)
+            minHeapifyName(heap, n, i);
+
+        // Extract items one by one
+        for (int i = n - 1; i > 0; --i) {
+            swap(heap[0], heap[i]);
+            minHeapifyName(heap, i, 0); // You need to implement minHeapify
+        }
+        displayItems();
+
     }
 
     void addItem( const Item& newItem) {
