@@ -31,10 +31,39 @@ void Menu::displayHeapMenu(){
     cout << "6. Heap Sort\n";
     cout << "7. Return to Main Menu\n";
 }
+
 int Menu::readChoice() {
     int choice;
     cin >> choice;
     return choice;
+}
+void Menu::processMainMenu(BST bst, Heap Heap,AVLTree avl) {
+    int mainChoice;
+    do {
+        Menu::displayMainMenu();
+        cout << "Enter your choice: ";
+
+        mainChoice = Menu::readChoice();
+        switch (mainChoice) {
+            case 1:
+                //processTreeMenu(bstTree);
+                break;
+            case 2:
+          processHeapMenu( Heap);
+                break;
+            case 3:
+                processTreeMenu(avl);
+                break;
+            case 4:
+                cout << "Exiting...\n";
+                break;
+            default:
+                cout << "Invalid choice! Please try again.\n";
+                break;
+        }
+    } while (mainChoice != 4);
+
+
 }
 void Menu::processTreeMenu(Tree &tree) {
     int treeChoice;
@@ -81,29 +110,50 @@ void Menu::processTreeMenu(Tree &tree) {
         }
     } while (treeChoice != 8);
 }
-void Menu::processMainMenu(BST bst, Heap minHeap, Heap maxHeap,AVLTree avl) {
-    int mainChoice;
-    do {
-        Menu::displayMainMenu();
-        cout << "Enter your choice: ";
-        mainChoice = Menu::readChoice();
-        switch (mainChoice) {
-            case 1:
-                //processTreeMenu(bstTree);
+void Menu::processHeapMenu(Heap& Heap) {
+    while (true) {
+        displayHeapMenu();
+        int choice;
+        cout << "Enter your choice (1-6): ";
+        cin >> choice;
+
+       switch (choice) {
+            case 1: {
+                cout << "Please enter the details of the new item (name category price): ";
+                string name, cateogry;
+                int price;
+                cin >> name >> cateogry >> price;
+                Item newitem(name, cateogry, price);
+               Heap.addItem(newitem);
                 break;
-            case 2:
-                // processHeapMenu(heap);
+            }
+            case 2: {
+                cout << "Please enter the name of the item to remove : ";
+                string itemName;
+                cin >> itemName;
+                Heap.removeItemByName( itemName);
+            }
                 break;
             case 3:
-                processTreeMenu(avl);
+              Heap.displayItems();
                 break;
             case 4:
-                cout << "Exiting...\n";
+                 Heap.heapSortAscending();
                 break;
-            default:
-                cout << "Invalid choice! Please try again.\n";
+            case 5:
+                Heap.heapSortDescending();
                 break;
-        }
-    } while (mainChoice != 4);
+            case 6:
+             //   sortItemsAscending(minHeap);
+                break;
+           case 8:
+               cout << "Returning to Main Menu...\n";
+               break;
+           default:
+               cout << "Invalid choice! Please try again.\n";
+               break;
+       }
 
+
+    }
 }
