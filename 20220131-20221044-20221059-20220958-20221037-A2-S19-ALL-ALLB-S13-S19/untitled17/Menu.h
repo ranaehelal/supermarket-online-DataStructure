@@ -17,9 +17,9 @@ public:
     static void displayTreeMenu();
     static void displayHeapMenu();
     static int readChoice();
-    void processMainMenu(BST bst, Heap minHeap, Heap maxHeap,AVLTree avl);
+    void processMainMenu(BST bst, Heap Heap,AVLTree avl);
+    void processHeapMenu(Heap& Heap);
     void processTreeMenu(Tree& tree);
-    //   void processHeapMenu(Heap& heap);
 };
 
 
