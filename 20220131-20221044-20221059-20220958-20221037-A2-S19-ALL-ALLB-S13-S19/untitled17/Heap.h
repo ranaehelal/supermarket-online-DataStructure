@@ -5,9 +5,99 @@
 
 #ifndef UNTITLED17_HEAP_H
 #define UNTITLED17_HEAP_H
-
+#include "Item.h"
 
 class Heap {
+private:
+    vector<Item> heap;
+
+    void maxHeapifyprice(int n, int i) {
+        int largest = i;
+        int left = 2 * i + 1;
+        int right = 2 * i + 2;
+
+        if (left < n && heap[left].getPrice() > heap[largest].getPrice())
+            largest = left;
+        if (right < n && heap[right].getPrice() > heap[largest].getPrice())
+            largest = right;
+
+        if (largest != i) {
+            swap(heap[i], heap[largest]);
+            maxHeapifyprice(n, largest);
+        }
+    }
+
+    void minHeapifyprice(int n, int i) {
+        int smallest = i;
+        int left = 2 * i + 1;
+        int right = 2 * i + 2;
+
+        if (left < n && heap[left].getPrice() < heap[smallest].getPrice())
+            smallest = left;
+        if (right < n && heap[right].getPrice() < heap[smallest].getPrice())
+            smallest = right;
+
+        if (smallest != i) {
+            swap(heap[i], heap[smallest]);
+            minHeapifyprice(n, smallest);
+        }
+    }
+
+public:
+    Heap() {}
+
+    void buildMaxHeap() {
+        int n = heap.size();
+        for (int i = n / 2 - 1; i >= 0; --i)
+            maxHeapifyprice(n, i);
+    }
+
+    void buildMinHeap() {
+        int n = heap.size();
+        for (int i = n / 2 - 1; i >= 0; --i)
+            minHeapifyprice(n, i);
+    }
+
+    void heapSortAscending() {
+        int n = heap.size();
+        buildMaxHeap();
+        for (int i = n - 1; i > 0; --i) {
+            swap(heap[0], heap[i]);
+            maxHeapifyprice(i, 0);
+        }
+        displayItems();
+    }
+
+    void heapSortDescending() {
+        int n = heap.size();
+        buildMinHeap();
+        for (int i = n - 1; i > 0; --i) {
+            swap(heap[0], heap[i]);
+            minHeapifyprice(i, 0);
+        }
+        displayItems();
+    }
+
+    void addItem( const Item& newItem) {
+        heap.push_back(newItem);
+    }
+
+    void removeItemByName( string& itemName) {
+        heap.erase(remove_if(heap.begin(), heap.end(), [&]( Item& item) {
+            return item.getItemName() == itemName;
+        }), heap.end());
+        displayItems();
+    }
+
+    const vector<Item>& getItems()  {
+        return heap;
+    }
+    void displayItems(){
+        vector<Item> items= getItems();
+        for (const auto& item : items) {
+            item.print();
+        }
+    }
 
 };
 
