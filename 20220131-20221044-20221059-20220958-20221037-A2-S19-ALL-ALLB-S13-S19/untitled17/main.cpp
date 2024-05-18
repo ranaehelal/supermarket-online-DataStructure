@@ -7,7 +7,7 @@
 using namespace std;
 
 // Function to read items.txt
-void readItems(ifstream& MyReadFile, BST& bst, Heap& minHeap, Heap& maxHeap, AVLTree& avl) {
+void readItems(ifstream& MyReadFile, BST& bst, Heap& Heap, AVLTree& avl) {
     if (!MyReadFile) {
         cerr << "Error opening file." << endl;
         return;
@@ -28,25 +28,29 @@ void readItems(ifstream& MyReadFile, BST& bst, Heap& minHeap, Heap& maxHeap, AVL
 
         Item item(itemName, category, price);
         //bst.insert(item);
-        //minHeap.insert(item);
-        //maxHeap.insert(item);
+         Heap.addItem(item);
+        //maxHeap.addItem(item);
         avl.insert(item);
     }
 
     MyReadFile.close();
 }
 
+
+
+
+
+
 int main() {
     // Initialize trees
     BST bst;
-    Heap minHeap; // Min Heap
-    Heap maxHeap; // Max Heap
+    Heap Heap; // Min Heap
     AVLTree avl; // AVLTree Tree
     Menu menu;
     // Read items.txt from file
     ifstream MyReadFile ("items.txt");
-    readItems( MyReadFile,bst, minHeap, maxHeap, avl);
-    menu.processMainMenu(bst, minHeap, maxHeap, avl); // Call processMainMenu on the menu instance
+    readItems( MyReadFile,bst, Heap, avl);
+    menu.processMainMenu(bst, Heap, avl); // Call processMainMenu on the menu instance
 
 
 
