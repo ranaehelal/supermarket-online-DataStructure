@@ -22,14 +22,14 @@ void Menu::displayTreeMenu() {
     cout << "8. Back to Main Menu\n";
 }
 void Menu::displayHeapMenu(){
-    cout << "Heap Menu\n";
     cout << "1. Add item data\n";
     cout << "2. Remove item data\n";
     cout << "3. Display item data normally\n";
-    cout << "4. Min Heap\n";
-    cout << "5. Max Heap\n";
-    cout << "6. Heap Sort\n";
-    cout << "7. Return to Main Menu\n";
+    cout << "4. Display all items sorted by name ascending\n";
+    cout << "5. Display all items sorted by name descending\n";
+    cout << "6. Display all items sorted by prices ascending\n";
+    cout << "7. Display all items sorted by prices descending\n";
+    cout << "8. Back to Main Menu\n";
 }
 
 int Menu::readChoice() {
@@ -69,7 +69,7 @@ void Menu::processTreeMenu(Tree &tree) {
     int treeChoice;
     do {
         Menu::displayTreeMenu();
-        cout << "Enter your choice: ";
+        cout << "Enter your choice (1-8): ";
         treeChoice = Menu::readChoice();
         // Process user choice for the tree menu
         switch (treeChoice) {
@@ -114,7 +114,7 @@ void Menu::processHeapMenu(Heap& Heap) {
     while (true) {
         displayHeapMenu();
         int choice;
-        cout << "Enter your choice (1-6): ";
+        cout << "Enter your choice (1-8): ";
         cin >> choice;
 
        switch (choice) {
@@ -137,14 +137,18 @@ void Menu::processHeapMenu(Heap& Heap) {
             case 3:
               Heap.displayItems();
                 break;
-            case 4:
+           case 4:
+               Heap. heapSortbyNameasc();
+               break;
+           case 5:
+               Heap. heapSortbyNamedec();
+               break;
+
+            case 6:
                  Heap.heapSortAscending();
                 break;
-            case 5:
+            case 7:
                 Heap.heapSortDescending();
-                break;
-            case 6:
-             //   sortItemsAscending(minHeap);
                 break;
            case 8:
                cout << "Returning to Main Menu...\n";
